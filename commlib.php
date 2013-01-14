@@ -33,6 +33,26 @@ function add_dj($conn, $first, $last, $year, $seniority, $email, $phone)
 	$stmt->close();
 }
 
+function edit_dj($conn, $first, $last, $year, $seniority, $email, $phone, $id)
+{
+    $stmt = $conn->prepare("UPDATE DJ SET F_NAME=?, L_NAME=?, YEAR_JOINED=?, SENIORITY_OFFSET=?, EMAIL=?, PHONE=? WHERE ID=?");
+	if (!$stmt)
+	{
+		echo "Unable to prepare statement.\n";
+		echo "Error: " . $conn->error . "\n";
+		return;
+	}
+	$result=$stmt->bind_param("ssiissi", $first, $last, $year, $seniority, $email, $phone, $id);
+	if (!$result)
+	{
+		echo "Unable to bind parameters.\n";
+		echo "Error: " . $conn->error . "\n";
+		return;
+	}
+	$stmt->execute();
+	$stmt->close();
+}
+
 function add_show($conn, $dj, $semester, $name)
 {
 	$stmt = $conn->prepare("INSERT INTO `SHOW` (SEMESTER_ID, DJ_ID, NAME) VALUES (?, ?, ?)");

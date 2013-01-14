@@ -37,7 +37,7 @@ $stmt->bind_result($id, $title, $time);
 while ($stmt->fetch())
 {
 	printf("<tr><td>%s</td><td>%s</td>", $title, $time);
-	printf("<td><a href='./add_show?semester=%s'>X</a></td></tr>", $id);
+	printf("<td><a href='./add_show?semester=%s'>add</a></td></tr>", $id);
 }
 
 $stmt->close();

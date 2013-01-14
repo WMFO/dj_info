@@ -30,6 +30,7 @@ DJ Control Panel
 <th>Seniority Offset</th>
 <th>Summary</th>
 <th>Discipline</th>
+<th>Edit</th>
 </tr>
 
 <?php
@@ -60,8 +61,9 @@ while ($stmt->fetch())
 {
 	printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td>",
 		$last, $first, $year, $senior);
-	printf("<td><a href='./dj_summary.php?dj=%s'>X</a></td>", $id);
-	printf("<td><a href='./discipline.php?dj=%s'>X</a></td>", $id);
+	printf("<td><a href='./dj_summary.php?dj=%s'>View</a></td>", $id);
+	printf("<td><a href='./discipline.php?dj=%s'>View</a></td>", $id);
+	printf("<td><a href='./edit_dj.php?dj=%s'>Edit</a></td>", $id);
 	printf("</tr>\n");
 }
 
