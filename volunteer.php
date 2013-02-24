@@ -90,9 +90,9 @@ $stmt->close();
 
 </select></td></tr><tr><td>
 Date: </td><td>
-<input name="Day" size="2" maxlength="2">/<input name="Month" size="2" maxlength="2">/<input name="Year" size="4" maxlength="4"></td></tr><tr><td>
+<input name="Month" size="2" maxlength="2" value="mm">/<input name="Day" size="2" maxlength="2" value="dd">/<input name="Year" size="4" maxlength="4" value="yyyy"></td></tr><tr><td>
 Hours: </td><td>
-<input name="Hours" size="2" maxlength="2"></td></tr><tr><td>
+<input name="Hours" size="3" maxlength="3"></td></tr><tr><td>
 Type: </td><td>
 <select name="Sub">
 	<option value="0">Volunteer</option>
@@ -155,13 +155,15 @@ if (isset($_REQUEST['delete']))
 ?>
 
 <table border="3">
-<tr><th>Day</th>
+<tr>
 <th>Month</th>
+<th>Day</th>
 <th>Year</th>
 <th>Hours</th>
 <th>Type</th>
 <th>Description</th>
-<th>Delete</th></tr>
+<th>Delete</th>
+</tr>
 
 <?php
 
@@ -172,7 +174,7 @@ if (
 	$stmt = $conn->prepare("SELECT DDAY,DMONTH,DYEAR,NUM_HOURS,DESCRIPTION,SUB_BOOL,ID FROM VOLUNTEER WHERE DJ_ID=? AND SEMESTER_ID=? ORDER BY DYEAR DESC, DMONTH DESC, DDAY DESC");
 	$stmt->bind_param("ii", $_REQUEST['DJ'], $_REQUEST['Semester']);
 	$stmt->execute();
-	$stmt->bind_result($day, $month, $year, $hours, $desc, $sub_bool, $id);
+	$stmt->bind_result($month, $day, $year, $hours, $desc, $sub_bool, $id);
 
 	while ($stmt->fetch())
 	{

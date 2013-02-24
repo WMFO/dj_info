@@ -24,6 +24,13 @@ if (
 		$_POST['YearJoined'], $_POST['SeniorityOffset'],
 		$_POST['Email'], $_POST['Phone'], $_REQUEST['dj']);
 }
+if (
+    isset($_REQUEST['dj']) &&
+    isset($_REQUEST['deleteID']) &&
+    is_numeric($_REQUEST['deleteID']) )
+{
+    delete_show($conn, $_REQUEST['deleteID']);
+}
 $conn->close();
 
 $conn = mysql_init();
@@ -52,6 +59,28 @@ printf("<input type=\"hidden\" name=\"dj\" value=\"$dj\">");
 <tr><td><input type="submit" value="Update DJ"></td></tr>
 </table>
 </form>
+
+<hr>
+<h2>Shows</h2>
+<table border="3">
+<tr><th>Show Name</th><th>Semester</th><th>Delete</th></tr>
+
+<?php
+$stmt = $conn->prepare("SELECT `NAME`,`SHOW`.ID,TITLE FROM `SHOW`,SEMESTER WHERE DJ_ID=? AND SEMESTER.ID=SEMESTER_ID ORDER BY SEMESTER.CREATION_TIME");
+$stmt->bind_param("i", $_REQUEST['dj']);
+$stmt->execute();
+$stmt->bind_result($show, $showID, $semester);
+
+while ($stmt->fetch())
+{
+	printf("<tr><td>%s</td><td>%s</td>\n", $show, $semester);
+	printf("<td><form action='./edit_dj?dj=%s&deleteID=%s' method='post' onsubmit=\"return confirm('Are you sure you want to delete %s for %s?')\"><input type=\"submit\" value=\"delete\"></form></td></tr>\n", $_REQUEST['dj'], $showID, $show, $semester);
+}
+
+$stmt->close();
+?>
+
+</table>
 
 <?php footer(); ?>
 </body>

@@ -105,13 +105,13 @@ $stmt2->close();
 <hr>
 <h2>Full Volunteer History</h2>
 <table border="3">
-<tr><th>Day</th><th>Month</th><th>Year</th><th>Semester</th><th>Hours</th><th>Type</th><th>Description</th></tr>
+<tr><th>Month</th><th>Day</th><th>Year</th><th>Semester</th><th>Hours</th><th>Type</th><th>Description</th></tr>
 
 <?php
-$stmt = $conn->prepare("SELECT DDAY,DMONTH,DYEAR,TITLE,NUM_HOURS,DESCRIPTION,SUB_BOOL FROM VOLUNTEER,SEMESTER WHERE SEMESTER.ID=SEMESTER_ID AND DJ_ID=? ORDER BY DYEAR DESC, DMONTH DESC, DDAY DESC");
+$stmt = $conn->prepare("SELECT DMONTH,DDAY,DYEAR,TITLE,NUM_HOURS,DESCRIPTION,SUB_BOOL FROM VOLUNTEER,SEMESTER WHERE SEMESTER.ID=SEMESTER_ID AND DJ_ID=? ORDER BY DYEAR DESC, DMONTH DESC, DDAY DESC");
 $stmt->bind_param("i", $_REQUEST['dj']);
 $stmt->execute();
-$stmt->bind_result($day, $month, $year, $semester, $hours, $desc, $sub_bool);
+$stmt->bind_result($month, $day, $year, $semester, $hours, $desc, $sub_bool);
 
 while ($stmt->fetch())
 {
@@ -124,7 +124,7 @@ while ($stmt->fetch())
 		$type = "VOL";
 	}
 	printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n",
-		$day, $month, $year, $semester, $hours, $type, $desc);
+		$month, $day, $year, $semester, $hours, $type, $desc);
 }
 
 $stmt->close();
