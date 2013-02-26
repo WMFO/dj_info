@@ -7,6 +7,7 @@ Access List
 
 <body>
 <h1>DJ Access List</h1>
+<p>This page lists all DJs marked "active" for submitting for station access.</p>
 <table border=3>
 <tr>
 <th>Last Name</th>
@@ -21,7 +22,7 @@ include 'commlib.php';
 
 $conn = mysql_init();
 
-$stmt = $conn->prepare("SELECT F_NAME,L_NAME,STUDENT_ID,ACCESS,AFFILIATION FROM DJ ORDER BY L_NAME ASC");
+$stmt = $conn->prepare("SELECT F_NAME,L_NAME,STUDENT_ID,ACCESS,AFFILIATION FROM DJ WHERE ACTIVE = \"yes\" ORDER BY L_NAME ASC");
 //printf("\n" . $conn->error . "\n");
 $stmt->execute();
 $stmt->bind_result($first, $last, $id, $access, $affiliation);
