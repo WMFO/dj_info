@@ -21,6 +21,9 @@ Access List
 include 'commlib.php';
 
 $conn = mysql_init();
+if (isset($_POST['resetall'])) {
+    $conn->query("UPDATE DJ SET ACTIVE = NULL WHERE 1");
+}
 
 $stmt = $conn->prepare("SELECT F_NAME,L_NAME,STUDENT_ID,ACCESS,AFFILIATION FROM DJ WHERE ACTIVE = \"yes\" ORDER BY L_NAME ASC");
 //printf("\n" . $conn->error . "\n");
@@ -37,9 +40,13 @@ while ($stmt->fetch())
 $stmt->close();
 $conn->close();
 
+
 ?>
 
 </table>
+<form method="post" action="">
+<p><input type="submit" name="resetall" value="Reset All Active Users"></p>
+</form>
 
 <?php footer(); ?>
 </body>
