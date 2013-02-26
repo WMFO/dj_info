@@ -92,7 +92,7 @@ $stmt->close();
 Date: </td><td>
 <input name="Month" size="2" maxlength="2" value="mm">/<input name="Day" size="2" maxlength="2" value="dd">/<input name="Year" size="4" maxlength="4" value="yyyy"></td></tr><tr><td>
 Hours: </td><td>
-<input name="Hours" size="3" maxlength="3"></td></tr><tr><td>
+<input name="Hours" size="5"></td></tr><tr><td>
 Type: </td><td>
 <select name="Sub">
 	<option value="0">Volunteer</option>
