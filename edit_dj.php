@@ -22,7 +22,9 @@ if (
 {
 	edit_dj($conn, $_POST['FirstName'], $_POST['LastName'],
 		$_POST['YearJoined'], $_POST['SeniorityOffset'],
-		$_POST['Email'], $_POST['Phone'], $_REQUEST['dj']);
+        $_POST['Email'], $_POST['Phone'], $_POST['StudentID'],
+        $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'],
+        $_POST['Active'], $_REQUEST['dj']);
 }
 if (
     isset($_REQUEST['dj']) &&
@@ -34,10 +36,10 @@ if (
 $conn->close();
 
 $conn = mysql_init();
-$stmt = $conn->prepare("SELECT F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE FROM DJ WHERE ID=?");
+$stmt = $conn->prepare("SELECT F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE,STUDENT_ID,AFFILIATION,ACCESS,EXEC,ACTIVE FROM DJ WHERE ID=?");
 $stmt->bind_param("i", $_REQUEST['dj']);
 $stmt->execute();
-$stmt->bind_result($first, $last, $year, $off, $email, $phone);
+$stmt->bind_result($first, $last, $year, $off, $email, $phone, $student_id, $affiliation, $access, $exec, $active);
 $stmt->fetch();
 $dj = $_REQUEST['dj'];
 
@@ -45,7 +47,7 @@ printf("<h1>Editing %s %s</h1>\n", $first, $last);
 $stmt->close();
 ?>
 
-<form action="./edit_dj.php" method="post">
+<form action="" method="post">
 <table border="3">
 <?php
 printf("<tr><td>First Name: </td><td><input name=\"FirstName\" value=\"$first\"></td></tr>");
@@ -54,6 +56,33 @@ printf("<tr><td>Email: </td><td><input name=\"Email\" value=\"$email\"></td></tr
 printf("<tr><td>Phone: </td><td><input name=\"Phone\" value=\"$phone\"></td></tr>");
 printf("<tr><td>Year Joined: </td><td><input name=\"YearJoined\" value=\"$year\"></td></tr>");
 printf("<tr><td>Seniority Offset: </td><td><input name=\"SeniorityOffset\" value=\"$off\"></td></tr>");
+printf("<tr><td>Student ID: </td><td><input name=\"StudentID\" value=\"$student_id\"></td></tr>");
+printf("<tr><td>Affiliation: </td><td><select name=\"Affiliation\">");
+$options = array ("Student", "Alum", "Community");
+foreach ($options as $option) {
+    printf("<option value=\"$option\"");
+    if ($option == $affiliation) {
+        printf(" selected");
+    }
+    printf(">$option</option>");
+}
+printf("</select></td></tr>");
+printf("<tr><td>Access: </td><td><select name=\"Access\">");
+$options = array ("General", "MD", "Engineer", "All");
+foreach ($options as $option) {
+    printf("<option value=\"$option\"");
+    if ($option == $access) {
+        printf(" selected");
+    }
+    printf(">$option</option>");
+}
+printf("</select></td></tr>");
+printf("<tr><td>Exec: </td><td><input type=\"checkbox\" name=\"Exec\"");
+if ($exec == "yes") { printf(" checked=\"yes\""); }
+printf("value=\"yes\"></td></tr>");
+printf("<tr><td>Active: </td><td><input type=\"checkbox\" name=\"Active\"");
+if ($active == "yes") { printf(" checked=\"yes\""); }
+printf("value=\"yes\"></td></tr>");
 printf("<input type=\"hidden\" name=\"dj\" value=\"$dj\">");
 ?>
 <tr><td><input type="submit" value="Update DJ"></td></tr>

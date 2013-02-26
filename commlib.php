@@ -43,30 +43,30 @@ function delete_semester($conn, $id)
 	$stmt->close();
 }
 
-function add_dj($conn, $first, $last, $year, $seniority, $email, $phone)
+function add_dj($conn, $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active)
 {
-	$stmt = $conn->prepare("INSERT INTO DJ (F_NAME, L_NAME, YEAR_JOINED, SENIORITY_OFFSET, EMAIL, PHONE) VALUES (?, ?, ?, ?, ?, ?)");
+	$stmt = $conn->prepare("INSERT INTO DJ (F_NAME, L_NAME, YEAR_JOINED, SENIORITY_OFFSET, EMAIL, PHONE, STUDENT_ID, AFFILIATION, ACCESS, EXEC, ACTIVE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	if (!$stmt)
 	{
 		echo "Unable to prepare statement.\n";
 		echo "Error: " . $conn->error . "\n";
 		return;
 	}
-	$stmt->bind_param("ssiiss", $first, $last, $year, $seniority, $email, $phone);
+	$stmt->bind_param("ssiisssssss", $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active);
 	$stmt->execute();
 	$stmt->close();
 }
 
-function edit_dj($conn, $first, $last, $year, $seniority, $email, $phone, $id)
+function edit_dj($conn, $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $id)
 {
-    $stmt = $conn->prepare("UPDATE DJ SET F_NAME=?, L_NAME=?, YEAR_JOINED=?, SENIORITY_OFFSET=?, EMAIL=?, PHONE=? WHERE ID=?");
+    $stmt = $conn->prepare("UPDATE DJ SET F_NAME=?, L_NAME=?, YEAR_JOINED=?, SENIORITY_OFFSET=?, EMAIL=?, PHONE=?, STUDENT_ID=?, AFFILIATION=?, ACCESS=?, EXEC=?, ACTIVE=? WHERE ID=?");
 	if (!$stmt)
 	{
 		echo "Unable to prepare statement.\n";
 		echo "Error: " . $conn->error . "\n";
 		return;
 	}
-	$result=$stmt->bind_param("ssiissi", $first, $last, $year, $seniority, $email, $phone, $id);
+	$result=$stmt->bind_param("ssiisssssssi", $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $id);
 	if (!$result)
 	{
 		echo "Unable to bind parameters.\n";
@@ -136,7 +136,7 @@ function add_volunteer($conn, $dj, $semester, $day, $month, $year, $hours, $desc
 function footer()
 {
 	printf("<hr><a href='./add_semester.php'>Semesters</a> <a href='./add_dj.php'>DJs</a>" .
-		" <a href='./volunteer.php'>Volunteering</a> <a href='score.php'>Scoring</a>");
+		" <a href='./volunteer.php'>Volunteering</a> <a href='score.php'>Scoring</a> <a href='access_list.php'>Access List</a>");
 }
 
 ?>

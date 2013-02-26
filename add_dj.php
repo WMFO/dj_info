@@ -15,6 +15,18 @@ DJ Control Panel
 <tr><td>Phone: </td><td><input name="Phone"></td><tr>
 <tr><td>Year Joined: </td><td><input name="YearJoined"></td></tr>
 <tr><td>Seniority Offset: </td><td><input name="SeniorityOffset"></td></tr>
+<tr><td>Student ID: </td><td><input name="StudentID"></td></tr>
+<tr><td>Affiliation: </td><td><select name="Affiliation">
+<option value="Student">Student</option>
+<option value="Alum">Alum</option>
+<option value="Community">Community</option></select></td></tr>
+<tr><td>Access: </td><td><select name="Access">
+<option value="General">General</option>
+<option value="MD">MD</option>
+<option value="Engineer">Engineer</option>
+<option value="All">All</option></select></td></tr>
+<tr><td>Exec: </td><td><input type="checkbox" name="Exec" value="yes"></td></tr>
+<tr><td>Active: </td><td><input type="checkbox" name="Active" value="yes"></td></tr>
 <tr><td><input type="submit" value="Add DJ"></td></tr>
 </table>
 </form>
@@ -49,7 +61,8 @@ if (
 {
 	add_dj($conn, $_POST['FirstName'], $_POST['LastName'],
 		$_POST['YearJoined'], $_POST['SeniorityOffset'],
-		$_POST['Email'], $_POST['Phone']);
+        $_POST['Email'], $_POST['Phone'], $_POST['StudentID'],
+    $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'], $_POST['Active']);
 }
 
 $stmt = $conn->prepare("SELECT ID,F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET FROM DJ ORDER BY L_NAME ASC");
