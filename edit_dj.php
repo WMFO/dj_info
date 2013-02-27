@@ -1,10 +1,3 @@
-<html>
-<head>
-<title>
-DJ Control Panel
-</title>
-</head>
-
 <?php
 include 'commlib.php';
 
@@ -25,7 +18,9 @@ if (
         $_POST['Email'], $_POST['Phone'], $_POST['StudentID'],
         $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'],
         $_POST['Active'], $_REQUEST['dj']);
+    header("Location: add_dj.php");
 }
+
 if (
     isset($_REQUEST['dj']) &&
     isset($_REQUEST['deleteID']) &&
@@ -34,7 +29,14 @@ if (
     delete_show($conn, $_REQUEST['deleteID']);
 }
 $conn->close();
-
+?>
+<html>
+<head>
+<title>
+DJ Control Panel
+</title>
+</head>
+<?php
 $conn = mysql_init();
 $stmt = $conn->prepare("SELECT F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE,STUDENT_ID,AFFILIATION,ACCESS,EXEC,ACTIVE FROM DJ WHERE ID=?");
 $stmt->bind_param("i", $_REQUEST['dj']);
