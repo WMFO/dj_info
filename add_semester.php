@@ -42,7 +42,7 @@ $stmt->bind_result($id, $title, $time);
 while ($stmt->fetch())
 {
 	printf("<tr><td>%s</td><td>%s</td>\n", $title, $time);
-	printf("<td><a href='./add_show?semester=%s'>add</a></td>\n", $id);
+	printf("<td><a href='./add_show?semester=%s'>View/Add</a></td>\n", $id);
 	printf("<td><form action='./add_semester?semesterToDelete=%s' method='post' onsubmit=\"return confirm('Are you sure you want to delete %s?')\"><input type=\"submit\" value=\"delete\"></form></td></tr>\n", $id, $title);
 }
 

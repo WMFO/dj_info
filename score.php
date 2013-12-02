@@ -21,7 +21,13 @@ $stmt->bind_result($id, $title);
 
 while ($stmt->fetch())
 {
-	printf("<option value='%s'>%s</option>\n", $id, $title);
+    echo "<option value='$id'";
+    if ($_POST['Semester1'] == $id) {
+        echo " selected";
+        $sem1 = $title;
+    }
+    echo ">$title</option>\n";
+	//printf("<option value='%s'>%s</option>\n", $id, $title);
 }
 
 $stmt->close();
@@ -37,7 +43,13 @@ $stmt->bind_result($id, $title);
 
 while ($stmt->fetch())
 {
-	printf("<option value='%s'>%s</option>\n", $id, $title);
+    echo "<option value='$id'";
+    if ($_POST['Semester2'] == $id) {
+        echo " selected";
+        $sem2 = $title;
+    }
+    echo ">$title</option>\n";
+	//printf("<option value='%s'>%s</option>\n", $id, $title);
 }
 
 $stmt->close();
@@ -53,7 +65,13 @@ $stmt->bind_result($id, $title);
 
 while ($stmt->fetch())
 {
-	printf("<option value='%s'>%s</option>\n", $id, $title);
+    echo "<option value='$id'";
+    if ($_POST['Semester3'] == $id) {
+        echo " selected";
+        $sem3 = $title;
+    }
+    echo ">$title</option>\n";
+	//printf("<option value='%s'>%s</option>\n", $id, $title);
 }
 
 $stmt->close();
@@ -64,16 +82,17 @@ $stmt->close();
 </td></tr>
 </table>
 <hr>
-<h1>Scoring</h1>
-<table border="3">
-<tr><th>Name</th><th>Semester 1</th><th>Semester 2</th><th>Semester 3</th></tr>
-
 <?php
 if (
 	isset($_POST['Semester1']) &&
 	isset($_POST['Semester2']) &&
 	isset($_POST['Semester3']) )
-{
+{?>
+<h1>Scoring</h1>
+<table border="3">
+<tr><th>Name</th>
+<?php
+echo "<th>$sem1</th><th>$sem2</th><th>$sem3</th></tr>";
 	$sem1 = $_POST['Semester1'];
 	$sem2 = $_POST['Semester2'];
 	$sem3 = $_POST['Semester3'];

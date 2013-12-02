@@ -90,16 +90,15 @@ $stmt->close();
 
 </select></td></tr><tr><td>
 Date: </td><td>
-<input name="Month" size="2" maxlength="2" value="mm">/<input name="Day" size="2" maxlength="2" value="dd">/<input name="Year" size="4" maxlength="4" value="yyyy"></td></tr><tr><td>
+<input name="Month" size="2" maxlength="2" placeholder="mm">/<input name="Day" size="2" maxlength="2" placeholder="dd">/<input name="Year" size="4" maxlength="4" placeholder="yyyy"></td></tr><tr><td>
 Hours: </td><td>
 <input name="Hours" size="5"></td></tr><tr><td>
 Type: </td><td>
-<select name="Sub">
-	<option value="0">Volunteer</option>
-	<option value="1">Sub</option>
-</select></td></tr><tr><td>
+<input type="radio" name="Sub" value="0"> Volunteer<br>
+<input type="radio" name="Sub" value="1"> Sub<br>
+</td></tr><tr><td>
 Description: </td><td>
-<textarea name="Description" rows="3" cols="80">No description.</textarea></td></tr><tr><td>
+<textarea name="Description" rows="3" cols="80" placeholder="Description..."></textarea></td></tr><tr><td>
 <input type="submit" value="Add Volunteer Event">
 </td></tr></table>
 </form>
