@@ -138,6 +138,13 @@ function footer()
 	printf("<hr><a href='./add_semester.php'>Semesters</a> <a href='./add_dj.php'>DJs</a>" .
 		" <a href='./volunteer.php'>Volunteering</a> <a href='score.php'>Scoring</a> <a href='access_list.php'>Access List</a>");
 }
+function tcexam_djs($conn) {
+    $result = $conn->query("SELECT * FROM DJ");
+    while ($r = $result->fetch_assoc()) {
+        $ret[] = $r;
+    }
+    return $ret;
+}
 
 ?>
 

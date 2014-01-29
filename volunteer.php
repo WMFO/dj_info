@@ -23,7 +23,11 @@ $stmt->bind_result($id, $title);
 
 while ($stmt->fetch())
 {
-	printf("<option value='%s'>%s</option>\n", $id, $title);
+	#printf("<option value='%s'>%s</option>\n", $id, $title);
+  echo "<option value='$id'";
+  if ($_POST['Semester'] == $id)
+    echo " selected";
+  echo ">$title</option>\n";
 }
 
 $stmt->close();
@@ -40,7 +44,12 @@ $stmt->bind_result($id, $lname, $fname);
 
 while ($stmt->fetch())
 {
-	printf("<option value='%s'>%s, %s</option>\n", $id, $lname, $fname);
+	#printf("<option value='%s'>%s, %s</option>\n", $id, $lname, $fname);
+  echo "<option value='$id'";
+  if ($_POST['DJ'] == $id)
+    echo " selected";
+  echo ">$lname, $fname</option>\n";
+        
 }
 
 $stmt->close();

@@ -9,12 +9,12 @@ DJ Control Panel
 <h1>WMFO DJ Control Panel</h1><br>
 <form action="./add_dj.php" method="post">
 <table border="3">
-<tr><td>First Name: </td><td><input name="FirstName"></td></tr>
-<tr><td>Last Name: </td><td><input name="LastName"></td></tr>
-<tr><td>Email: </td><td><input name="Email"></td></tr>
+<tr><td>First Name: </td><td><input name="FirstName" required></td></tr>
+<tr><td>Last Name: </td><td><input name="LastName" required></td></tr>
+<tr><td>Email: </td><td><input type="email" name="Email" required></td></tr>
 <tr><td>Phone: </td><td><input name="Phone"></td><tr>
-<tr><td>Year Joined: </td><td><input name="YearJoined"></td></tr>
-<tr><td>Seniority Offset: </td><td><input name="SeniorityOffset"></td></tr>
+<tr><td>Year Joined: </td><td><input name="YearJoined" required></td></tr>
+<tr><td>Seniority Offset: </td><td><input name="SeniorityOffset" required></td></tr>
 <tr><td>Student ID: </td><td><input name="StudentID"></td></tr>
 <tr><td>Affiliation: </td><td><select name="Affiliation">
 <option value="Student">Student</option>
