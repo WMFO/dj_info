@@ -11,10 +11,10 @@ DJ Summary Page
 include 'commlib.php';
 $conn = mysql_init();
 
-$stmt = $conn->prepare("SELECT F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE FROM DJ WHERE ID=?");
+$stmt = $conn->prepare("SELECT F_NAME,PREF_NAME,M_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE,EXEC,SUB,UNSUB,ACTIVE FROM DJ WHERE ID=?");
 $stmt->bind_param("i", $_REQUEST['dj']);
 $stmt->execute();
-$stmt->bind_result($first, $last, $year, $off, $email, $phone);
+$stmt->bind_result($first,$preferred, $middle, $last, $year, $off, $email, $phone,$exec,$sub,$unsub,$active);
 $stmt->fetch();
 
 printf("<h1>%s %s</h1>\n", $first, $last);
@@ -24,11 +24,15 @@ $stmt->close();
 <h2>Info</h2>
 <table border="3">
 <?php
-printf("<tr><td>Name: </td><td>%s %s</td></tr>\n", $first, $last);
+printf("<tr><td>Name: </td><td>%s (%s) %s %s</td></tr>\n", $first, $preferred, $middle, $last);
 printf("<tr><td>Email: </td><td>%s</td></tr>\n", $email);
 printf("<tr><td>Phone: </td><td>%s</td></tr>\n", $phone);
 printf("<tr><td>Year Joined: </td><td>%s</td></tr>\n", $year);
 printf("<tr><td>Seniority Offset: </td><td>%s</td></tr>\n", $off);
+printf("<tr><td>Exec: </td><td>%s</td></tr>", $exec == "yes" ? "yes" : "no");
+printf("<tr><td>Active: </td><td>%s</td></tr>", $active == "yes" ? "yes" : "no");
+printf("<tr><td>Sub: </td><td>%s</td></tr>", $sub == "yes" ? "yes" : "no");
+printf("<tr><td>Unsubscribed: </td><td>%s</td></tr>", $unsub == "yes" ? "yes" : "no");
 ?>
 
 </table>

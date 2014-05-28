@@ -43,30 +43,30 @@ function delete_semester($conn, $id)
 	$stmt->close();
 }
 
-function add_dj($conn, $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active)
+function add_dj($conn, $first, $last, $middle, $preferred, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $sub, $unsub)
 {
-	$stmt = $conn->prepare("INSERT INTO DJ (F_NAME, L_NAME, YEAR_JOINED, SENIORITY_OFFSET, EMAIL, PHONE, STUDENT_ID, AFFILIATION, ACCESS, EXEC, ACTIVE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt = $conn->prepare("INSERT INTO DJ (F_NAME, L_NAME, M_NAME, PREF_NAME, YEAR_JOINED, SENIORITY_OFFSET, EMAIL, PHONE, STUDENT_ID, AFFILIATION, ACCESS, EXEC, ACTIVE, SUB, UNSUB) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)");
 	if (!$stmt)
 	{
 		echo "Unable to prepare statement.\n";
 		echo "Error: " . $conn->error . "\n";
 		return;
 	}
-	$stmt->bind_param("ssiisssssss", $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active);
+	$stmt->bind_param("ssssiisssssssss", $first, $last, $middle, $preferred, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $sub, $unsub);
 	$stmt->execute();
 	$stmt->close();
 }
 
-function edit_dj($conn, $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $id)
+function edit_dj($conn, $first, $last, $middle, $preferred, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $id, $sub, $unsub)
 {
-    $stmt = $conn->prepare("UPDATE DJ SET F_NAME=?, L_NAME=?, YEAR_JOINED=?, SENIORITY_OFFSET=?, EMAIL=?, PHONE=?, STUDENT_ID=?, AFFILIATION=?, ACCESS=?, EXEC=?, ACTIVE=? WHERE ID=?");
+    $stmt = $conn->prepare("UPDATE DJ SET F_NAME=?, L_NAME=?, M_NAME=?, PREF_NAME=?, YEAR_JOINED=?, SENIORITY_OFFSET=?, EMAIL=?, PHONE=?, STUDENT_ID=?, AFFILIATION=?, ACCESS=?, EXEC=?, ACTIVE=?, SUB=?, UNSUB=? WHERE ID=?");
 	if (!$stmt)
 	{
 		echo "Unable to prepare statement.\n";
 		echo "Error: " . $conn->error . "\n";
 		return;
 	}
-	$result=$stmt->bind_param("ssiisssssssi", $first, $last, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $id);
+	$result=$stmt->bind_param("ssssiisssssssssi", $first, $last, $middle, $preferred, $year, $seniority, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $sub, $unsub, $id);
 	if (!$result)
 	{
 		echo "Unable to bind parameters.\n";

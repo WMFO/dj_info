@@ -12,7 +12,6 @@ Access List
 <tr>
 <th>Last Name</th>
 <th>First Name</th>
-<th>Student ID</th>
 <th>Access Level Needed</th>
 <th>Affiliation</th>
 </tr>
@@ -25,15 +24,15 @@ if (isset($_POST['resetall'])) {
     $conn->query("UPDATE DJ SET ACTIVE = NULL WHERE 1");
 }
 
-$stmt = $conn->prepare("SELECT F_NAME,L_NAME,STUDENT_ID,ACCESS,AFFILIATION FROM DJ WHERE ACTIVE = \"yes\" ORDER BY L_NAME ASC");
+$stmt = $conn->prepare("SELECT F_NAME,L_NAME,M_NAME,PREF_NAME,STUDENT_ID,ACCESS,AFFILIATION FROM DJ WHERE ACTIVE = \"yes\" ORDER BY L_NAME ASC");
 //printf("\n" . $conn->error . "\n");
 $stmt->execute();
-$stmt->bind_result($first, $last, $id, $access, $affiliation);
+$stmt->bind_result($first, $last, $middle, $preferred, $id, $access, $affiliation);
 
 while ($stmt->fetch())
 {
-	printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>",
-		$last, $first, $id, $access, $affiliation);
+	printf("<tr><td>%s</td><td>%s %s</td><td>%s</td><td>%s</td>",
+		$last, $first, $middle, $access, $affiliation);
 	printf("</tr>\n");
 }
 

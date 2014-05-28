@@ -10,6 +10,8 @@ DJ Control Panel
 <form action="./add_dj.php" method="post">
 <table border="3">
 <tr><td>First Name: </td><td><input name="FirstName" required></td></tr>
+<tr><td>Preferred Name: </td><td><input name="PreferredName"></td></tr>
+<tr><td>Middle Name: </td><td><input name="MiddleName"></td></tr>
 <tr><td>Last Name: </td><td><input name="LastName" required></td></tr>
 <tr><td>Email: </td><td><input type="email" name="Email" required></td></tr>
 <tr><td>Phone: </td><td><input name="Phone"></td><tr>
@@ -27,6 +29,8 @@ DJ Control Panel
 <option value="All">All</option></select></td></tr>
 <tr><td>Exec: </td><td><input type="checkbox" name="Exec" value="yes"></td></tr>
 <tr><td>Active: </td><td><input type="checkbox" name="Active" value="yes"></td></tr>
+<tr><td>Sub: </td><td><input type="checkbox" name="Sub" value="yes"></td></tr>
+<tr><td>Unsubscribed: </td><td><input type="checkbox" name="UnSub" value="yes"></td></tr>
 <tr><td><input type="submit" value="Add DJ"></td></tr>
 </table>
 </form>
@@ -39,7 +43,6 @@ DJ Control Panel
 <th>First Name</th>
 <th>Year Joined</th>
 <th>Seniority Offset</th>
-<th>Student ID</th>
 <th>Summary</th>
 <th>Affiliation</th>
 <th>Discipline</th>
@@ -83,16 +86,16 @@ if (
 	is_numeric($_POST['YearJoined']) &&
 	is_numeric($_POST['SeniorityOffset']) )
 {
-	add_dj($conn, $_POST['FirstName'], $_POST['LastName'],
+	add_dj($conn, $_POST['FirstName'], $_POST['LastName'],$_POST['MiddleName'],$_POST['PreferredName'],
 		$_POST['YearJoined'], $_POST['SeniorityOffset'],
         $_POST['Email'], $_POST['Phone'], $_POST['StudentID'],
-    $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'], $_POST['Active']);
+    $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'], $_POST['Active'], $_POST['Sub'], $_POST['UnSub']);
 }
 
-$stmt = $conn->prepare("SELECT ID,F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,ACTIVE,STUDENT_ID,AFFILIATION FROM DJ ORDER BY L_NAME ASC");
+$stmt = $conn->prepare("SELECT ID,F_NAME,L_NAME,PREF_NAME,YEAR_JOINED,SENIORITY_OFFSET,ACTIVE,AFFILIATION FROM DJ ORDER BY L_NAME ASC");
 //printf("\n" . $conn->error . "\n");
 $stmt->execute();
-$stmt->bind_result($id, $first, $last, $year, $senior, $active, $studentid, $affiliation);
+$stmt->bind_result($id, $first, $last, $preferred, $year, $senior, $active, $affiliation);
 
 while ($stmt->fetch())
 {
@@ -101,8 +104,12 @@ while ($stmt->fetch())
     } else {
         $checked = NULL;
     }
-	printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>",
-		$last, $first, $year, $senior, $studentid, $affiliation);
+	printf("<tr><td>%s</td><td>%s",$last, $first);
+    if ($preferred != '') {
+        echo " ($preferred)";
+    }
+    printf("</td><td>%s</td><td>%s</td><td>%s</td>",
+		 $year, $senior, $affiliation);
 	printf("<td><a href='./dj_summary.php?dj=%s'>Summary</a></td>", $id);
 	printf("<td><a href='./discipline.php?dj=%s'>Discipline</a></td>", $id);
 	printf("<td><a href='./edit_dj.php?dj=%s'>Edit</a></td>", $id);

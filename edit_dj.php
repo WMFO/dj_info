@@ -14,10 +14,12 @@ if (
 	is_numeric($_POST['SeniorityOffset']) )
 {
 	edit_dj($conn, $_POST['FirstName'], $_POST['LastName'],
+        $_POST['MiddleName'], $_POST['PreferredName'],
 		$_POST['YearJoined'], $_POST['SeniorityOffset'],
         $_POST['Email'], $_POST['Phone'], $_POST['StudentID'],
-        $_POST['Affiliation'], $_POST['Access'], $_POST['Exec'],
-        $_POST['Active'], $_REQUEST['dj']);
+        $_POST['Affiliation'], $_POST['Access'], @$_POST['Exec'],
+        @$_POST['Active'], $_REQUEST['dj'], @$_POST['Sub'],
+        @$_POST['UnSub']);
     header("Location: add_dj.php");
 }
 
@@ -38,10 +40,10 @@ DJ Control Panel
 </head>
 <?php
 $conn = mysql_init();
-$stmt = $conn->prepare("SELECT F_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE,STUDENT_ID,AFFILIATION,ACCESS,EXEC,ACTIVE FROM DJ WHERE ID=?");
+$stmt = $conn->prepare("SELECT F_NAME,M_NAME,PREF_NAME,L_NAME,YEAR_JOINED,SENIORITY_OFFSET,EMAIL,PHONE,STUDENT_ID,AFFILIATION,ACCESS,EXEC,ACTIVE,SUB,UNSUB FROM DJ WHERE ID=?");
 $stmt->bind_param("i", $_REQUEST['dj']);
 $stmt->execute();
-$stmt->bind_result($first, $last, $year, $off, $email, $phone, $student_id, $affiliation, $access, $exec, $active);
+$stmt->bind_result($first, $middle, $preferred, $last, $year, $off, $email, $phone, $student_id, $affiliation, $access, $exec, $active, $sub, $unsub);
 $stmt->fetch();
 $dj = $_REQUEST['dj'];
 
@@ -53,6 +55,8 @@ $stmt->close();
 <table border="3">
 <?php
 printf("<tr><td>First Name: </td><td><input name=\"FirstName\" value=\"$first\"></td></tr>");
+printf("<tr><td>Preferred Name: </td><td><input name=\"PreferredName\" value=\"$preferred\"></td></tr>");
+printf("<tr><td>Middle Name: </td><td><input name=\"MiddleName\" value=\"$middle\"></td></tr>");
 printf("<tr><td>Last Name: </td><td><input name=\"LastName\" value=\"$last\"></td></tr>");
 printf("<tr><td>Email: </td><td><input name=\"Email\" value=\"$email\"></td></tr>");
 printf("<tr><td>Phone: </td><td><input name=\"Phone\" value=\"$phone\"></td></tr>");
@@ -84,6 +88,12 @@ if ($exec == "yes") { printf(" checked=\"yes\""); }
 printf("value=\"yes\"></td></tr>");
 printf("<tr><td>Active: </td><td><input type=\"checkbox\" name=\"Active\"");
 if ($active == "yes") { printf(" checked=\"yes\""); }
+printf("value=\"yes\"></td></tr>");
+printf("<tr><td>Sub: </td><td><input type=\"checkbox\" name=\"Sub\"");
+if ($sub == "yes") { printf(" checked=\"yes\""); }
+printf("value=\"yes\"></td></tr>");
+printf("<tr><td>Unsubscribed: </td><td><input type=\"checkbox\" name=\"UnSub\"");
+if ($unsub == "yes") { printf(" checked=\"yes\""); }
 printf("value=\"yes\"></td></tr>");
 printf("<input type=\"hidden\" name=\"dj\" value=\"$dj\">");
 ?>
